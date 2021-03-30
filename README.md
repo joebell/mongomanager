@@ -69,6 +69,11 @@ In `mysite/myapp.py` import MongoManager and register the blueprint:
     db.eng.init_app(app)
 
     app.register_blueprint(mm.mongomanager)
+
+    @app.route('/myroute')
+    @mm.requires_perm('admin')
+    def mine():
+        return results
 ```
 
 In `mysite/.env` set `SAFEPATH` to permit directory browsing:
