@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ path }}</h2>
+    <ul>
+        {{ link_to_parent_dir(path)|safe }}
+        {% for item in pathItems %}
+        <li> {{ link_to_file(path, item)|safe }} </li> 
+        {% endfor %}
+        
+    </ul>
+{% endblock content %}

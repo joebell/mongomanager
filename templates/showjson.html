@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+{% endblock head %}
+
+{% block content %}
+    <h2>filepath: <a href="{{ url_for('mongomanager.render_directory',path=fileObj.filepath) }}">{{ fileObj.filepath }}</a></h2>
+    <h2>filename: <a href="{{ url_for('mongomanager.showfile',id=fileObj.id) }}">{{ fileObj.filename }}</a></h2>
+    <h2>id: <a href="{{ url_for('mongomanager.object',className='File',id=fileObj.id) }}">{{ fileObj.id }}</a></h2>
+    <pre>
+    <code class="prettyprint">
+        {{jsonData}}
+    </code>
+    </pre>
+{% endblock %}

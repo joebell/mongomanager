@@ -1,0 +1,36 @@
+<html>
+    <head>
+        {% block head %}
+            <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1'/>
+            <link rel="stylesheet" href="{{ url_for('static',filename='basestyles.css') }}"></link>
+        {% endblock head %}
+    </head>
+    <body>
+        <div class="header"> 
+            {% block header %}
+                <h1>Mongomanager Header</h1>
+            {% endblock header %}
+        </div>
+        <div class="scrollableContent">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <div class="footer">
+            <div class="footercolleft">
+                {% block footerleft %}
+                    Logged in as: {{user['firstname']}} {{user['lastname']}}
+                    &nbsp;&nbsp;
+                {% endblock footerleft %}
+            </div>
+            <div class="footercolright">
+                {% block footerright %}
+                    <a href="{{ url_for('mongomanager.login') }}"> Login </a>
+                    &nbsp;&nbsp;
+                    <a href="{{ url_for('mongomanager.logout') }}"> Logout </a>
+                    &nbsp;&nbsp;
+                {% endblock footerright %}
+            </div>
+        </div>
+    </body>
+</html>
+

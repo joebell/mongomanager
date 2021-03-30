@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Collection: {{className}}</h2>
+    <table>
+        <tr>
+            {% for key in classObj._fields.keys() %}
+                <th class='bigtable'>
+                    {{ key }}
+                </th>
+            {% endfor %}
+        <tr>
+            {% for item in itemList %}
+                <tr>
+                    {% for key in classObj._fields.keys() %}
+                        <td class='bigtable'>
+                            {{ render_item(key, item[key], item)|safe }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+    </table>
+    
+    {% from "_formhelpers.html" import render_field %}
+    <form action="{{url_for('mongomanager.collection', className=className)}}" method="POST">
+        <dl>
+        {{ render_field(form.additem) }}
+        {{ render_field(form.remitem) }}
+        </dl>
+    
+        {{ form.csrf_token }}
+        <button type="submit">Add/Remove</button>
+    </form>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+{% endblock content %}

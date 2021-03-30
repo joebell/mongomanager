@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% from "_formhelpers.html" import render_field %}
+    <form action="{{ url_for('mongomanager.login') }}" method="POST">
+        <dl>
+        {{ render_field(form.username) }}
+        {{ render_field(form.password) }}
+        </dl>
+
+        {{ form.csrf_token }}
+        <button type="submit">Login</button>
+    </form>
+    <form action="{{ url_for('mongomanager.register') }}">
+        <button type="submit">Register</button>
+    </form>
+{% endblock %}

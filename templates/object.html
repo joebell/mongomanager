@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Collection: <a href="{{ url_for('mongomanager.collection', className=anObject.__class__.__name__) }}">{{ anObject.__class__.__name__ }}</a></h2>
+    <ul>
+        {% for key in anObject._fields.keys() %}
+            <li><b> {{ key }}:</b> {{ render_item(key, anObject[key], anObject)|safe }} </li> 
+        {% endfor %}
+        
+    </ul>
+{% endblock content %}

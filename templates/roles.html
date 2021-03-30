@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>User Roles:</h2>
+    <table>
+        <tr>
+            <th>Username: </th>
+            <th>Current Roles: </th>
+        <tr>
+            {% for user in roledata %}
+                <tr>
+                    <td>
+                    {{ user[0] }}
+                    </td>
+                    <td>
+                    {{ user[1] }}
+                    </td>
+                </tr>
+            {% endfor %}
+    </table>
+    
+    {% from "_formhelpers.html" import render_field %}
+    <form action="{{ url_for('mongomanager.roles') }}" method="POST">
+        <dl>
+        {{ render_field(form.username) }}
+        {{ render_field(form.addrole) }}
+        {{ render_field(form.remrole) }}
+        </dl>
+    
+        {{ form.csrf_token }}
+        <button type="submit">Add/Remove</button>
+    </form>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+{% endblock %}

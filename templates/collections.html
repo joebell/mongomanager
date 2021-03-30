@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Collections:</h2>
+        <ul>
+            {% for className in classList %}
+            <li>
+                <a href="{{ url_for('mongomanager.collection',className=className) }}">{{ className }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+{% endblock content %}
