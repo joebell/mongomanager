@@ -26,7 +26,6 @@ try:
 except:
     print('.env not found.')
     raise RuntimeError(os.getcwd())
-DBNAME = env.get('DBNAME')
 SAFEPATH = env.get('SAFEPATH') # Determines where admin can browse
 
 # MongoDB and forms
