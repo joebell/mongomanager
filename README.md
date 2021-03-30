@@ -4,4 +4,17 @@ A Flask blueprint for building a basic website with MongoDB. Provides decorators
 
 ## Usage:
 
-Usage instructions to follow.
+Clone the repo into your Flask project:
+```
+/var/www/mysite
+    - myapp.py
+    - database.py
+    /mongomanager
+        - __init__.py
+        - mongomanager.py
+        - database.py
+        /templates
+            - base.html
+            - etc.html
+```
+
