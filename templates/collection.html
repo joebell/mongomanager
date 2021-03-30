@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Collection: {{className}}</h2>
+<h2><a href="{{ url_for('mongomanager.collections') }}">Collection</a>: {{className}}</h2>
     <table>
         <tr>
             {% for key in classObj._fields.keys() %}
