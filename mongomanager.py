@@ -81,7 +81,7 @@ def requires_perm(requiredRole):
 @mongomanager.route('/nopermission')
 @requires_auth
 def nopermission():
-    reqpath = SITEBASE_URL + session['requestpath']
+    reqpath = session['requestpath']
     return render_template('nopermission.html',reqpath=reqpath)
 
 
