@@ -38,10 +38,12 @@ import mongomanager.forms as forms
 def inject_user():
     if 'userid' in session:
         user = db.User.objects(id=session['userid']).first()
+        user.loggedin = True
     else:
         user = dict()
         user['firstname'] = 'Not logged in'
         user['lastname'] = ''
+        user.loggedin = False
     return dict(user=user)
 
 # Decorator for routes that require authentication,
