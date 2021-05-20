@@ -40,6 +40,7 @@ def inject_user():
         user = db.User.objects(id=session['userid']).first()
     else:
         user = dict()
+        user['username'] = 'none'
         user['firstname'] = 'Not logged in'
         user['lastname'] = ''
     return dict(user=user)

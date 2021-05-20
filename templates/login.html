@@ -2,7 +2,9 @@
 
 {% block content %}
     {% from "_formhelpers.html" import render_field %}
-    <form action="{{ url_for('mongomanager.login') }}" method="POST">
+    <form action="{{ url_for('mongomanager.login') }}" 
+          method="POST"
+          data-ajax="false">
         <dl>
         {{ render_field(form.username) }}
         {{ render_field(form.password) }}
