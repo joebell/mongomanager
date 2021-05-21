@@ -6,7 +6,6 @@
 import os, glob, sys, json, time, bson, random
 from functools import wraps
 from os import environ as env
-from dotenv import load_dotenv, find_dotenv
 from datetime import datetime, timedelta
 from pymongo.errors import DuplicateKeyError
 from mongoengine import NotUniqueError
@@ -19,14 +18,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Register as a blueprint
 mongomanager = Blueprint('mongomanager', __name__,
                          template_folder='templates')
-
-# Load environment variables
-try:
-    load_dotenv(find_dotenv())
-except:
-    print('.env not found.')
-    raise RuntimeError(os.getcwd())
-SAFEPATH = env.get('SAFEPATH') # Determines where admin can browse
 
 # MongoDB and forms
 import database as db # Import the application's database, 
@@ -181,7 +172,8 @@ mongomanager.add_app_template_global(link_to_parent_dir)
 @requires_perm('admin')
 def render_directory(path):
     path = '/' + path # Add the full root slash on
-    if os.path.realpath(path).startswith(SAFEPATH):
+    # if os.path.realpath(path).startswith(SAFEPATH):
+    if True:
         pathItems = os.listdir(path)
         return render_template('showdir.html', 
                                path=path, 
