@@ -7,8 +7,12 @@ from mongoengine import NotUniqueError
 from datetime import datetime
 import os
 import hashlib
+import logging
 
 eng = MongoEngine()
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('mongomanager')
 
 class TrackedAssignment(me.Document):
     addedby = me.ReferenceField('User', required=True)
@@ -67,26 +71,27 @@ class File(TrackedAssignment):
                 self.filename = self.getfilename()
                 fullfilename = os.path.join(self.filepath, 
                                             self.filename)
-                print(fullfilename)
+                logger.debug('Filename: ' + fullfilename)
                 # If the filename exists already
                 if os.path.exists(fullfilename):
                     with open(fullfilename,'rb') as f:
                         existingData = f.read()
                     # If it's the same file, keep the hashstring
                     if data == existingData:
-                        print('File duplicate found, ' +
-                              'linking to duplicate.')
+                        logger.debug('File duplicate found, ' +
+                                     'linking to duplicate.')
                         self.iscurrent = True
                         self.save()
                         return True
                     # If it's not identical increment the hash and try again
                     else:
-                        print('File hash collision, incrementing hash')
+                        logger.deebug('File hash collision, ' + 
+                                      'incrementing hash')
                         dataHash.update('1'.encode('utf-8'))
                 # If we haven't already stored a file with that hash, 
                 # save it.
                 else:
-                    print('Writing new file.')
+                    logger.debug('Writing new file.')
                     with open(fullfilename,'wb+') as f:
                         f.write(data)
                     self.iscurrent = True
