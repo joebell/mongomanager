@@ -9,7 +9,7 @@ from os import environ as env
 from datetime import datetime, timedelta
 from pymongo.errors import DuplicateKeyError
 from mongoengine import NotUniqueError
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, redirect, request, make_response
 from flask import render_template, Blueprint
 from flask import session, url_for, flash, Response, abort
 from flask import send_from_directory
@@ -256,16 +256,19 @@ def showfile(id):
     elif ext == '.png':
         return render_template('showpng.html', fileObj=fileObj)
     else:
-        return 'implementation in progress'
+        # return 'implementation in progress'
+        return getfile(id=id)
 
 
 @mongomanager.route('/getfile/<id>')
 @requires_perm('admin')
 def getfile(id):
     fileObj = db.File.objects(id=id).first()
+    download_name=fileObj.getfilename() + '.' + fileObj.filetype
     return send_from_directory(fileObj.getpath(), 
-                               fileObj.getfilename(), 
-                               as_attachment=True)
+                             fileObj.getfilename(), 
+                             as_attachment=True, 
+                             attachment_filename=download_name)
 
 
 # Utility route to list all the database collections
