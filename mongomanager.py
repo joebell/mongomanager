@@ -7,6 +7,7 @@ import os, glob, sys, json, time, bson, random
 from functools import wraps
 from os import environ as env
 from datetime import datetime, timedelta
+import pytz
 from pymongo.errors import DuplicateKeyError
 from mongoengine import NotUniqueError
 from flask import Flask, jsonify, redirect, request, make_response
@@ -233,7 +234,7 @@ def render_item(itemkey, item, parent):
             return text
         # If the item is a datetime, display in correct timezone
         elif item.__class__ is datetime:
-            return str(item)
+            return pytz.utc.localize(item).astimezone().strftime("%m/%d/%Y %H:%M:%S")
         # Otherwise, try to dump to a string
         else:
             return str(item)
