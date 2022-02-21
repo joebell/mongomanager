@@ -16,16 +16,16 @@ logger = logging.getLogger('mongomanager')
 
 class TrackedAssignment(me.Document):
     addedby = me.ReferenceField('User', required=True)
-    addeddate = me.DateTimeField(required=True, default=datetime.now)
+    addeddate = me.DateTimeField(required=True, default=datetime.utcnow)
     iscurrent = me.BooleanField(required=True, default=True)
     removedby = me.ReferenceField('User', required=False)
     removeddate = me.DateTimeField(required=False)
-    modifieddate = me.DateTimeField(required=True, default=datetime.now)
+    modifieddate = me.DateTimeField(required=True, default=datetime.utcnow)
     meta = {'allow_inheritance': True,
             'abstract': True}
     def update(self, *args, **kwargs):
         result = super(TrackedAssignment, self).update(
-                modifieddate=datetime.now(), *args, **kwargs)
+                modifieddate=datetime.utcnow(), *args, **kwargs)
         return result
 
 

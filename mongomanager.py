@@ -132,7 +132,7 @@ def register():
                 newRole = db.RoleAssignment(role='admin',
                             user=newUser,
                             addedby=newUser,
-                            addeddate = datetime.now(),
+                            addeddate = datetime.utcnow(),
                             iscurrent = True)
                 newRole.save()
                 newUser.update(push__roleassignments=newRole)
@@ -231,6 +231,9 @@ def render_item(itemkey, item, parent):
                 text = text[:-2] # Remove the last comma
             text += ']'
             return text
+        # If the item is a datetime, display in correct timezone
+        elif item.__class__ is datetime:
+            return str(item)
         # Otherwise, try to dump to a string
         else:
             return str(item)
@@ -314,7 +317,7 @@ def collection(className):
             try:
                 newItem = classObj(name=form.additem.data,
                                 addedby = current_user,
-                                addeddate = datetime.now(),
+                                addeddate = datetime.utcnow(),
                                 iscurrent = True)
                 newItem.save()
                 flash('Added item: ' + newItem.name)
@@ -327,7 +330,7 @@ def collection(className):
                                         id=form.remitem.data).first()
                 item.update(iscurrent=False,
                         removedby=current_user,
-                        removeddate=datetime.now())
+                        removeddate=datetime.utcnow())
                 item.save()
                 if 'name' in classObj._fields.keys():
                     flash('Removed item: ' + item.name)
@@ -358,7 +361,7 @@ def roles():
                 newRole = db.RoleAssignment(role=addRole,
                             user = existing_user,
                             addedby = current_user,
-                            addeddate = datetime.now(),
+                            addeddate = datetime.utcnow(),
                             iscurrent = True)
                 newRole.save()
                 existing_user.update(
@@ -376,7 +379,7 @@ def roles():
                 for roleAssignment in existingRoles:
                     roleAssignment.update(iscurrent=False,
                                           removedby=current_user,
-                                          removeddate=datetime.now())
+                                          removeddate=datetime.utcnow())
                     roleAssignment.save()
                     flash('Removed: ' + remRole + 
                           ' for: ' + existing_user.username)
